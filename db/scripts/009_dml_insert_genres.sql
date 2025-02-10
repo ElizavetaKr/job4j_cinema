@@ -1,0 +1,1 @@
+insert into genres(name) values('Adventure'), ('Fantasy'), ('Sci-fi'), ('Action'), ('Romance');

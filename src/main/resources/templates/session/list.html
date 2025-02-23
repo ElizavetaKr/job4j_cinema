@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/header :: header"></head>
+<body>
+<div class="container">
+    <div class="row">
+        <table class="table">
+            <thead>
+            <tr>
+                <th><i class="bi bi-square"></i></th>
+                <th scope="col">Расписание сеансов</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="session: ${film_sessions}">
+                <td th:text="${session.id}" />
+                <td th:text="${#temporals.format(session.start, 'dd-MMM-yyyy')}"/>
+                <td th:text="${#temporals.format(session.end, 'dd-MMM-yyyy')}"/>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<footer th:include="fragments/footer :: footer"></footer>
+</body>
+</html>

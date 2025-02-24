@@ -17,10 +17,39 @@ public class Sql2oGenreRepository implements GenreRepository {
     }
 
     @Override
+    public Genre save(Genre genre) {
+        try (Connection connection = sql2o.open()) {
+            Query query = connection.createQuery("INSERT INTO genres(name) VALUES (:name)", true)
+                    .addParameter("name", genre.getName());
+            int id = query.executeUpdate().getKey(Integer.class);
+            genre.setId(id);
+            return genre;
+        }
+    }
+
+    @Override
     public Collection<Genre> findAll() {
         try (Connection connection = sql2o.open()) {
             Query query = connection.createQuery("SELECT * FROM genres");
             return query.executeAndFetch(Genre.class);
+        }
+    }
+
+    @Override
+    public Genre findById(int id) {
+        try (Connection connection = sql2o.open()) {
+            Query query = connection.createQuery("SELECT * FROM genres WHERE id = :id")
+                    .addParameter("id", id);
+            return query.executeAndFetchFirst(Genre.class);
+        }
+    }
+
+    @Override
+    public Genre findByName(String name) {
+        try (Connection connection = sql2o.open()) {
+            Query query = connection.createQuery("SELECT * FROM genres WHERE name = :name")
+                    .addParameter("name", name);
+            return query.executeAndFetchFirst(Genre.class);
         }
     }
 }

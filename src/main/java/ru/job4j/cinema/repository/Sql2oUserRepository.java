@@ -42,11 +42,8 @@ public class Sql2oUserRepository implements UserRepository {
             Query query = connection.createQuery("SELECT * FROM users WHERE email = :email AND password = :password")
                     .addParameter("email", email)
                     .addParameter("password", password);
-            User user = query.executeAndFetchFirst(User.class);
-            return Optional.of(user);
-        } catch (Sql2oException e) {
-            e.printStackTrace();
+            User user = query.setColumnMappings(User.COLUMN_MAPPING).executeAndFetchFirst(User.class);
+            return Optional.ofNullable(user);
         }
-        return Optional.empty();
     }
 }

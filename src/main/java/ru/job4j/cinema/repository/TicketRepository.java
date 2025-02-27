@@ -12,7 +12,7 @@ public interface TicketRepository {
 
     void deleteById(int id);
 
-    Optional<Ticket> findById(int id);
+    Optional<Ticket> findByRowAndPlace(int row, int place);
 
     Collection<Ticket> findAll();
 }

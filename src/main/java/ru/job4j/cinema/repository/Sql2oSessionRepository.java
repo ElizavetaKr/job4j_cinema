@@ -66,7 +66,7 @@ public class Sql2oSessionRepository implements SessionRepository {
         try (Connection connection = sql2o.open()) {
             Query query = connection.createQuery("SELECT * FROM film_sessions WHERE id = :id")
                     .addParameter("id", id);
-            Session session = query.executeAndFetchFirst(Session.class);
+            Session session = query.setColumnMappings(Session.COLUMN_MAPPING).executeAndFetchFirst(Session.class);
             return Optional.ofNullable(session);
         }
     }

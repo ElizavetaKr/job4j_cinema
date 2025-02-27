@@ -31,8 +31,8 @@ public class SimpleTicketService implements TicketService {
     }
 
     @Override
-    public Optional<Ticket> findById(int id) {
-        return ticketRepository.findById(id);
+    public Optional<Ticket> findByRowAndPlace(int row, int place) {
+        return ticketRepository.findByRowAndPlace(row, place);
     }
 
     @Override

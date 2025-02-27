@@ -1,1 +1,2 @@
-insert into genres(name) values('Adventure'), ('Fantasy'), ('Sci-fi'), ('Action'), ('Romance');
+insert into genres(name) values('Приключения'), ('Фантастика'), ('Научная фантастика'),
+('Экшн'), ('Мелодрама');

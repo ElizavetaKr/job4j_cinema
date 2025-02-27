@@ -24,11 +24,11 @@ public class SimpleSessionService implements SessionService {
     }
 
     private SessionDto toDto(Session session) {
-        Optional<FilmDto> film = filmService.findById(session.getFilmId());
+        Optional<FilmDto> filmDto = filmService.findById(session.getFilmId());
         Optional<Hall> hall = hallService.findById(session.getHallId());
-        if (film.isPresent() && hall.isPresent()) {
-            return new SessionDto(session.getId(), film.get().getName(),
-                    hall.get().getName(), session.getStart(), session.getEnd(),
+        if (filmDto.isPresent() && hall.isPresent()) {
+            return new SessionDto(session.getId(), filmDto.get().getName(),
+                    hall.get(), session.getStart(), session.getEnd(),
                     session.getPrice());
         }
         return null;

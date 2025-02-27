@@ -65,11 +65,15 @@ public class Sql2oTicketRepository implements TicketRepository {
     }
 
     @Override
-    public Optional<Ticket> findById(int id) {
+    public Optional<Ticket> findByRowAndPlace(int row, int place) {
         try (Connection connection = sql2o.open()) {
-            Query query = connection.createQuery("SELECT * FROM tickets WHERE id = :id")
-                    .addParameter("id", id);
-            Ticket ticket = query.executeAndFetchFirst(Ticket.class);
+            Query query = connection.createQuery("""
+                            SELECT * FROM tickets WHERE row_number = :row
+                            AND place_number = :place
+                            """)
+                    .addParameter("row", row)
+                    .addParameter("place", place);
+            Ticket ticket = query.setColumnMappings(Ticket.COLUMN_MAPPING).executeAndFetchFirst(Ticket.class);
             return Optional.ofNullable(ticket);
         }
     }

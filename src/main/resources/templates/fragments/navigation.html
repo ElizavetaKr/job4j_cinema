@@ -4,8 +4,13 @@
         <a class="navbar-brand" href="/">Кинотеатр</a>
         <div class="collapse navbar-collapse">
             <div class="navbar-nav me-auto">
-                <a class="nav-item nav-link active" href="/">Главная</a>
-                <a class="nav-item nav-link" th:href="@{/session}">Расписание</a>
+                <a class="nav-item nav-link active" href="/">Мой кинотеатр</a>
+                <a class="nav-item nav-link" th:href="@{/sessions}">Расписание сеансов</a>
+                <a class="nav-item nav-link" th:href="@{/films}">Киноафиша</a>
+                <div class="d-flex">
+                    <a class="nav-link text-secondary me-3" th:href="@{/users/register}">Регистрация</a>
+                    <a class="nav-link text-secondary" th:href="@{/users/login}">Войти</a>
+                </div>
             </div>
         </div>
     </div>

@@ -33,7 +33,7 @@ public class Sql2oFileRepository implements FileRepository {
     public void deleteById(int id) {
         try (Connection connection = sql2o.open()) {
             connection.createQuery("DELETE FROM files WHERE id = :id")
-                    .addParameter("id", id);
+                    .addParameter("id", id).executeUpdate();
         }
     }
 

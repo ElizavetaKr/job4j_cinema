@@ -47,7 +47,8 @@ public class Sql2oSessionRepository implements SessionRepository {
                     .addParameter("hallId", session.getHallId())
                     .addParameter("start", session.getStart())
                     .addParameter("end", session.getEnd())
-                    .addParameter("price", session.getPrice());
+                    .addParameter("price", session.getPrice())
+                    .addParameter("id", session.getId());
             int affectedRows = query.executeUpdate().getResult();
             return affectedRows > 0;
         }
@@ -57,7 +58,7 @@ public class Sql2oSessionRepository implements SessionRepository {
     public void deleteById(int id) {
         try (Connection connection = sql2o.open()) {
             connection.createQuery("DELETE FROM film_sessions WHERE id = :id")
-                    .addParameter("id", id);
+                    .addParameter("id", id).executeUpdate();
         }
     }
 

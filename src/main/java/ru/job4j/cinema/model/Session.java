@@ -90,11 +90,11 @@ public class Session {
             return false;
         }
         Session session = (Session) object;
-        return id == session.id && filmId == session.filmId && hallId == session.hallId && price == session.price;
+        return filmId == session.filmId && hallId == session.hallId && price == session.price;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, filmId, hallId, price);
+        return Objects.hash(filmId, hallId, price);
     }
 }

@@ -52,7 +52,8 @@ public class Sql2oFilmRepository implements FilmRepository {
                     .addParameter("genreId", film.getGenreId())
                     .addParameter("minimalAge", film.getMinimalAge())
                     .addParameter("duration", film.getDuration())
-                    .addParameter("fileId", film.getFileId());
+                    .addParameter("fileId", film.getFileId())
+                    .addParameter("id", film.getId());
             int affectedRows = query.executeUpdate().getResult();
             return affectedRows > 0;
         }
@@ -62,7 +63,7 @@ public class Sql2oFilmRepository implements FilmRepository {
     public void deleteById(int id) {
         try (Connection connection = sql2o.open()) {
             connection.createQuery("DELETE FROM films WHERE id = :id")
-                    .addParameter("id", id);
+                    .addParameter("id", id).executeUpdate();
         }
     }
 

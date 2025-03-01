@@ -50,7 +50,8 @@ public class Sql2oTicketRepository implements TicketRepository {
                     .addParameter("sessionId", ticket.getSessionId())
                     .addParameter("row", ticket.getRow())
                     .addParameter("place", ticket.getPlace())
-                    .addParameter("userId", ticket.getUserId());
+                    .addParameter("userId", ticket.getUserId())
+                    .addParameter("id", ticket.getId());
             int affectedRows = query.executeUpdate().getResult();
             return affectedRows > 0;
         }
@@ -60,7 +61,7 @@ public class Sql2oTicketRepository implements TicketRepository {
     public void deleteById(int id) {
         try (Connection connection = sql2o.open()) {
             connection.createQuery("DELETE FROM tickets WHERE id = :id")
-                    .addParameter("id", id);
+                    .addParameter("id", id).executeUpdate();
         }
     }
 

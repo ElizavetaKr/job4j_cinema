@@ -62,7 +62,7 @@ class Sql2oFilmRepositoryTest {
 
     @Test
     public void whenUpdateExistFilmThenGetFalse() {
-        Film film = new Film(10, "name", "desc..", 1, 1, 1, 1, 1);
+        Film film = new Film();
         boolean isUpdated = sql2oFilmRepository.update(film);
         assertThat(isUpdated).isFalse();
     }

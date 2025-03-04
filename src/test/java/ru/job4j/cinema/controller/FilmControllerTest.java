@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.ui.ConcurrentModel;
 import org.springframework.ui.Model;
-import ru.job4j.cinema.service.FilmService;
+import ru.job4j.cinema.service.film.FilmService;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.mock;

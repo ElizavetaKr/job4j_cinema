@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.sql2o.Sql2o;
 import ru.job4j.cinema.configuration.DatasourceConfiguration;
 import ru.job4j.cinema.model.Session;
+import ru.job4j.cinema.repository.session.Sql2oSessionRepository;
 
 import javax.sql.DataSource;
 import java.io.InputStream;
@@ -53,6 +54,15 @@ class Sql2oSessionRepositoryTest {
     }
 
     @Test
+    public void whenUpdateExistSessionThenGetFalse() {
+        Session session = new Session();
+        System.out.println(session);
+        boolean isUpdated = sql2oSessionRepository.update(session);
+        System.out.println(session);
+        assertThat(isUpdated).isFalse();
+    }
+
+    @Test
     public void whenUpdateThenGetUpdated() {
         LocalDateTime start = LocalDateTime.of(2025, 10, 2, 10, 0);
         LocalDateTime end = LocalDateTime.of(2025, 10, 2, 12, 30);
@@ -65,14 +75,5 @@ class Sql2oSessionRepositoryTest {
         var savedSession = sql2oSessionRepository.findById(updatedSession.getId()).get();
         assertThat(isUpdated).isTrue();
         assertThat(savedSession).usingRecursiveComparison().isEqualTo(updatedSession);
-    }
-
-    @Test
-    public void whenUpdateExistSessionThenGetFalse() {
-        LocalDateTime start = LocalDateTime.of(2025, 10, 2, 10, 0);
-        LocalDateTime end = LocalDateTime.of(2025, 10, 2, 12, 30);
-        Session session = new Session(1, 3, 1, start, end, 100);
-        boolean isUpdated = sql2oSessionRepository.update(session);
-        assertThat(isUpdated).isFalse();
     }
 }

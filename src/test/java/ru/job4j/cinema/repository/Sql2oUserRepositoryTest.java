@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.sql2o.Sql2o;
 import ru.job4j.cinema.configuration.DatasourceConfiguration;
 import ru.job4j.cinema.model.User;
+import ru.job4j.cinema.repository.user.Sql2oUserRepository;
 
 import javax.sql.DataSource;
 import java.io.InputStream;

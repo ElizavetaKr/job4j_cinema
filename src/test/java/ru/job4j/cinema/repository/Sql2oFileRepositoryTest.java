@@ -4,8 +4,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.sql2o.Sql2o;
 import ru.job4j.cinema.configuration.DatasourceConfiguration;
-import ru.job4j.cinema.model.Ticket;
-import ru.job4j.cinema.repository.ticket.Sql2oTicketRepository;
+import ru.job4j.cinema.model.File;
+import ru.job4j.cinema.repository.file.Sql2oFileRepository;
 
 import javax.sql.DataSource;
 import java.io.InputStream;
@@ -14,15 +14,14 @@ import java.util.Properties;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-class Sql2oTicketRepositoryTest {
-    private static Sql2oTicketRepository sql2oTicketRepository;
-
+class Sql2oFileRepositoryTest {
+    private static Sql2oFileRepository sql2oFileRepository;
     private static Sql2o sql2o;
 
     @BeforeAll
     public static void initRepositories() throws Exception {
         Properties properties = new Properties();
-        try (InputStream inputStream = Sql2oTicketRepository.class.getClassLoader().getResourceAsStream("connection.properties")) {
+        try (InputStream inputStream = Sql2oFileRepository.class.getClassLoader().getResourceAsStream("connection.properties")) {
             properties.load(inputStream);
         }
         String url = properties.getProperty("datasource.url");
@@ -33,19 +32,27 @@ class Sql2oTicketRepositoryTest {
         DataSource datasource = configuration.connectionPool(url, username, password);
         sql2o = configuration.databaseClient(datasource);
 
-        sql2oTicketRepository = new Sql2oTicketRepository(sql2o);
+        sql2oFileRepository = new Sql2oFileRepository(sql2o);
     }
 
     @Test
     public void whenFindNotExistThenGetEmptyOptional() {
-        Optional<Ticket> ticket = sql2oTicketRepository.findByRowAndPlace(100, 100);
-        assertThat(ticket).isEmpty();
+        Optional<File> file = sql2oFileRepository.findById(100);
+        assertThat(file).isEmpty();
     }
 
     @Test
-    public void whenUpdateExistTicketThenGetFalse() {
-        Ticket ticket = new Ticket(1, 3, 1, 1, 1);
-        boolean isUpdated = sql2oTicketRepository.update(ticket);
-        assertThat(isUpdated).isFalse();
+    public void whenDeleteThenGetEmptyOptional() {
+        File file = sql2oFileRepository.save(new File("name", "path"));
+        sql2oFileRepository.deleteById(file.getId());
+        Optional<File> fileOptional = sql2oFileRepository.findById(file.getId());
+        assertThat(fileOptional).isEmpty();
+    }
+
+    @Test
+    public void whenFindByIdThenGetFile() {
+        Optional<File> file = sql2oFileRepository.findById(1);
+        File expectedFile = new File(1, "Avatar", "src/main/resources/files/Avatar.jpg");
+        assertThat(file.get()).usingRecursiveComparison().isEqualTo(expectedFile);
     }
 }

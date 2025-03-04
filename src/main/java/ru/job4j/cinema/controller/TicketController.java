@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.job4j.cinema.dto.SessionDto;
 import ru.job4j.cinema.model.Hall;
 import ru.job4j.cinema.model.Ticket;
-import ru.job4j.cinema.service.SessionService;
-import ru.job4j.cinema.service.TicketService;
+import ru.job4j.cinema.service.session.SessionService;
+import ru.job4j.cinema.service.ticket.TicketService;
 
 import java.util.List;
 import java.util.Optional;
@@ -50,7 +50,7 @@ public class TicketController {
         Optional<Ticket> buyTicket = ticketService.save(ticket);
         if (buyTicket.isEmpty()) {
             model.addAttribute("message", "Видимо, этот билет уже куплен. Попробуйте забронировать другой");
-            return "errors/404";
+            return "errors/409";
         }
         Ticket ticket1 = buyTicket.get();
         String atr = "Ряд: " + ticket1.getRow() + " Место: " + ticket1.getPlace();

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.ui.ConcurrentModel;
 import org.springframework.ui.Model;
 import ru.job4j.cinema.model.User;
-import ru.job4j.cinema.service.UserService;
+import ru.job4j.cinema.service.user.UserService;
 
 import java.util.Optional;
 
@@ -45,7 +45,7 @@ class UserControllerTest {
     public void whenUserExistWithExceptionThenErrorPageWithMessage() {
         Model model = new ConcurrentModel();
 
-        assertThat(userController.register(new User(), model)).isEqualTo("errors/404");
-        assertThat(model.getAttribute("message")).isEqualTo("Пользователь с такой почтой уже существует");
+        assertThat(userController.register(new User(), model)).isEqualTo("users/register");
+        assertThat(model.getAttribute("error")).isEqualTo("Пользователь с такой почтой уже существует");
     }
 }
